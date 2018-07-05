@@ -1,0 +1,24 @@
+{
+  "name": "itdocs/aliyun-sms-sdk",
+  "type": "library",
+  "description": "阿里云短信sdk封装",
+  "keywords": ["AliyunSMS", "aliyun", "SMS", "itdocs"],
+  "homepage": "https://github.com/OrgItdocs/aliyun-sms-sdk",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.6.0"
+  },
+  "authors": [
+    {
+      "name": "ITer",
+      "email": "xianan_huang@163.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Aliyun\\": "src",
+      "Aliyun\\Api\\": "src/api_sdk/lib/",
+      "Aliyun\\Msg\\": "src/msg_sdk/lib",
+    }
+  }
+}
