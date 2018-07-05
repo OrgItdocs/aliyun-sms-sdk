@@ -19,7 +19,7 @@
       "Aliyun\\": "/",
       "Aliyun\\Api\\": "api_sdk/lib/"
     }
-  }
+  },
   
   "repositories": {
         "packagist": {
