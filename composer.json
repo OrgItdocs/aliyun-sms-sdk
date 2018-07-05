@@ -21,4 +21,11 @@
       "Aliyun\\Msg\\": "src/msg_sdk/lib",
     }
   }
+  
+  "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
 }
