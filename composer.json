@@ -16,8 +16,8 @@
   ],
   "autoload": {
     "psr-4": {
-      "Aliyun\\": "src",
-      "Aliyun\\Api\\": "src/api_sdk/lib/"
+      "Aliyun\\": "/",
+      "Aliyun\\Api\\": "api_sdk/lib/"
     }
   }
   

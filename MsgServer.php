@@ -1,15 +1,10 @@
 <?php
-
-ini_set("display_errors", "on");
-
-require_once dirname(__DIR__) . '/msg_sdk/vendor/autoload.php';
-
-require_once __DIR__ . '/lib/TokenGetterForAlicom.php';
-require_once __DIR__ . '/lib/TokenForAlicom.php';
+namespace Aliyun;
 
 use Aliyun\Core\Config;
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Requests\BatchReceiveMessageRequest; // 批量拉取请求
+use Aliyun\Lib\TokenGetterForAlicom;
 
 // 加载区域结点配置
 Config::load();
@@ -17,7 +12,7 @@ Config::load();
 /**
  * Class MsgDemo
  */
-class MsgDemo
+class MsgServer
 {
 
     /**
