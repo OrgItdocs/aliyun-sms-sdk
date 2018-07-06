@@ -1,5 +1,5 @@
 <?php
-namespace Aliyun;
+namespace Aliyun\Server;
 
 use Aliyun\Core\Config;
 use Aliyun\Core\Profile\DefaultProfile;
