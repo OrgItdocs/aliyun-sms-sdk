@@ -1,5 +1,5 @@
 <?php
-namespace Aliyun\Server;
+namespace Aliyun\Lib;
 
 use Aliyun\Core\Config;
 use AliyunMNS\Exception\MnsException;
