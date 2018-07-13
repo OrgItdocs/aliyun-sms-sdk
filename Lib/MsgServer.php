@@ -14,21 +14,35 @@ Config::load();
  */
 class MsgServer
 {
+    private $accessKeyId;
+
+    private $accessKeySecret;
+
+    public function __construct($accessKeyId, $accessKeySecret)
+    {
+        //设置ack
+        $this->accessKeyId = $accessKeyId;
+
+        //设置acs
+        $this->accessKeySecret = $accessKeySecret;
+
+    }
+
 
     /**
      * @var TokenGetterForAlicom
      */
     static $tokenGetter = null;
 
-    public static function getTokenGetter() {
+    public function getTokenGetter() {
 
         $accountId = "1943695596114318"; // 此处不需要替换修改!
 
         // TODO 此处需要替换成开发者自己的AK (https://ak-console.aliyun.com/)
 
-        $accessKeyId = "yourAccessKeyId"; // AccessKeyId
+        $accessKeyId = $this->accessKeyId; // AccessKeyId
 
-        $accessKeySecret = "yourAccessKeySecret"; // AccessKeySecret
+        $accessKeySecret = $this->accessKeySecret; // AccessKeySecret
 
         if(static::$tokenGetter == null) {
             static::$tokenGetter = new TokenGetterForAlicom(
@@ -50,8 +64,13 @@ class MsgServer
      * <br/>回调返回false,消息不删除可以下次获取.
      * <br/>(e.g. function ($message) { return true; }
      * </p>
+     * @throws \AliyunMNS\InvalidArgumentException
+     * @throws \AliyunMNS\MessageNotExistException
+     * @throws \AliyunMNS\MnsException
+     * @throws \AliyunMNS\QueueNotExistException
+     * @throws \AliyunMNS\ReceiptHandleErrorException
      */
-    public static function receiveMsg($messageType, $queueName, callable $callback)
+    public function receiveMsg($messageType, $queueName, callable $callback)
     {
         $i = 0;
         // 取回执消息失败3次则停止循环拉取
@@ -60,7 +79,7 @@ class MsgServer
             try
             {
                 // 取临时token
-                $tokenForAlicom = static::getTokenGetter()->getTokenByMessageType($messageType, $queueName);
+                $tokenForAlicom = $this->getTokenGetter()->getTokenByMessageType($messageType, $queueName);
 
                 // 使用MNSClient得到Queue
                 $queue = $tokenForAlicom->getClient()->getQueueRef($queueName);
@@ -124,43 +143,43 @@ class MsgServer
 
 // 调用示例：
 
-header('Content-Type: text/plain; charset=utf-8');
-
-echo "消息接口查阅短信状态报告返回结果:\n";
-MsgDemo::receiveMsg(
-    // 消息类型，SmsReport: 短信状态报告
-    "SmsReport",
-
-    // 在云通信页面开通相应业务消息后，就能在页面上获得对应的queueName
-    "Alicom-Queue-xxxxxxxx-SmsReport",
-
-    /**
-     * 回调
-     * @param stdClass $message 消息数据
-     * @return bool 返回true，则工具类自动删除已拉取的消息。返回false，消息不删除可以下次获取
-     */
-    function ($message) {
-        print_r($message);
-        return false;
-    }
-);
-
-
-echo "消息接口查阅短信服务上行返回结果:\n";
-MsgDemo::receiveMsg(
-    // 消息类型，SmsUp: 短信服务上行
-    "SmsUp",
-
-    // 在云通信页面开通相应业务消息后，就能在页面上获得对应的queueName
-    "Alicom-Queue-xxxxxxxx-SmsUp",
-
-    /**
-     * 回调
-     * @param stdClass $message 消息数据
-     * @return bool 返回true，则工具类自动删除已拉取的消息。返回false，消息不删除可以下次获取
-     */
-    function ($message) {
-        print_r($message);
-        return false;
-    }
-);
+//header('Content-Type: text/plain; charset=utf-8');
+//
+//echo "消息接口查阅短信状态报告返回结果:\n";
+//MsgDemo::receiveMsg(
+//    // 消息类型，SmsReport: 短信状态报告
+//    "SmsReport",
+//
+//    // 在云通信页面开通相应业务消息后，就能在页面上获得对应的queueName
+//    "Alicom-Queue-xxxxxxxx-SmsReport",
+//
+//    /**
+//     * 回调
+//     * @param stdClass $message 消息数据
+//     * @return bool 返回true，则工具类自动删除已拉取的消息。返回false，消息不删除可以下次获取
+//     */
+//    function ($message) {
+//        print_r($message);
+//        return false;
+//    }
+//);
+//
+//
+//echo "消息接口查阅短信服务上行返回结果:\n";
+//MsgDemo::receiveMsg(
+//    // 消息类型，SmsUp: 短信服务上行
+//    "SmsUp",
+//
+//    // 在云通信页面开通相应业务消息后，就能在页面上获得对应的queueName
+//    "Alicom-Queue-xxxxxxxx-SmsUp",
+//
+//    /**
+//     * 回调
+//     * @param stdClass $message 消息数据
+//     * @return bool 返回true，则工具类自动删除已拉取的消息。返回false，消息不删除可以下次获取
+//     */
+//    function ($message) {
+//        print_r($message);
+//        return false;
+//    }
+//);
